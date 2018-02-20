@@ -1,22 +1,36 @@
-import React, {Component} from 'react';
-import {withRouter} from 'react-router-dom';
-import SignUpForm from './SignUpForm';
-import SignUpLink from './SignUpLink';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import SignUpForm from "./SignUpForm";
+import SignUpLink from "./SignUpLink";
 
-class SignUp extends Component{
+import "./SignUp.css"
 
-    constructor(props){
-        super(props);
-    }
+import {
+  Card,
+  CardActions,
+  CardHeader,
+  CardMedia,
+  CardTitle,
+  CardText
+} from "material-ui/Card";
 
-    render(){
-        return (
-            <div>
-                <h1>Реєстрація</h1>
-                <SignUpForm history ={this.props.history}/>
-            </div>
-        );
-    }
+class SignUp extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div className="cardContainer">
+        <Card className="card">
+          <CardHeader title="Реєстрація" />
+          <CardText>
+            <SignUpForm history={this.props.history} />
+          </CardText>
+        </Card>
+      </div>
+    );
+  }
 }
 
 export default withRouter(SignUp);

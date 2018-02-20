@@ -15,3 +15,15 @@ export const registerWithGoogle = () => {
     var provider = new firebase.auth.GoogleAuthProvider();
     return Rx.Observable.fromPromise(auth.signInWithPopup(provider));
 }
+
+export const registerWithGithub = () => {
+    auth.useDeviceLanguage();
+    var provider = new firebase.auth.GithubAuthProvider();
+    return Rx.Observable.fromPromise(auth.signInWithPopup(provider));
+}
+
+export const registerWithFacebook = () => {
+    auth.useDeviceLanguage();
+    var provider = new firebase.auth.FacebookAuthProvider();
+    return Rx.Observable.fromPromise(auth.signInWithPopup(provider));
+}
