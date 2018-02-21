@@ -11,194 +11,195 @@ import Snackbar from 'material-ui/Snackbar';
 import './SignUpForm.css';
 
 const initialState = {
-  email: '',
-  passwordOne: '',
-  passwordTwo: '',
-  error: null,
-  isSignUpLoading: false,
-  isGoogleLoading: false,
-  isFacebookLoading: false,
-  isGithubLoading: false,
-  isDone: false
+	email: '',
+	passwordOne: '',
+	passwordTwo: '',
+	error: null,
+	isSignUpLoading: false,
+	isGoogleLoading: false,
+	isFacebookLoading: false,
+	isGithubLoading: false,
+	isDone: false,
 };
 
 const byPropKey = (propertyName, value) => () => ({
-  [propertyName]: value
+	[propertyName]: value,
 });
 
 export default class SignUpForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { ...initialState };
-  }
+	constructor(props) {
+		super(props);
+		this.state = { ...initialState };
+	}
 
-  onSubmit = event => {
-    this.setState({ isSignUpLoading: true });
+	redirectToQuestions = () => {
+		this.props.history.push(routes.Questions);
+	};
 
-    const { email, passwordOne } = this.state;
-    auth.registerWithEmail(email, passwordOne).subscribe(
-      () => {
-        this.setState({ ...initialState });
-        this.setState({ isDone: true });
-        this.props.history.push(routes.Questions);
-      },
-      error => {
-        this.setState(byPropKey('error', error));
-      }
-    );
-    this.setState({ isSignUpLoading: false });
-    event.preventDefault();
-  };
+	onSubmit = event => {
+		this.setState({ isSignUpLoading: true });
 
-  onGoogleClick = () => {
-    this.setState({ isGoogleLoading: true });
-    auth.registerWithGoogle().subscribe(
-      res => {
-        console.log(res.user);
-        console.log(res.credential);
-        this.setState({ ...initialState });
-        this.setState({ isDone: true });
-        //  this.props.history.push(routes.Questions);
-      },
-      error => {
-        this.setState(byPropKey('error', error));
-      }
-    );
-    this.setState({ isGoogleLoading: false });
-  };
+		const { email, passwordOne } = this.state;
+		auth.registerWithEmail(email, passwordOne).subscribe(
+			() => {
+				this.setState({ ...initialState });
+				this.setState({ isDone: true });
+			},
+			error => {
+				this.setState(byPropKey('error', error));
+			}
+		);
+		this.setState({ isSignUpLoading: false });
+		event.preventDefault();
+	};
 
-  onFacebookClick = () => {
-    this.setState({ isFacebookLoading: true });
-    auth.registerWithFacebook().subscribe(
-      res => {
-        console.log(res);
-        this.setState({ ...initialState });
-        this.setState({ isDone: true });
-        this.props.history.push(routes.Questions);
-      },
-      error => {
-        this.setState(byPropKey('error', error));
-      }
-    );
-    this.setState({ isFacebookLoading: false });
-  };
+	onGoogleClick = () => {
+		this.setState({ isGoogleLoading: true });
+		auth.registerWithGoogle().subscribe(
+			res => {
+				console.log(res.user);
+				console.log(res.credential);
+				this.setState({ ...initialState });
+				this.setState({ isDone: true });
+			},
+			error => {
+				this.setState(byPropKey('error', error));
+			}
+		);
+		this.setState({ isGoogleLoading: false });
+	};
 
-  onGithubClick = () => {
-    this.setState({ isGithubLoading: true });
-    auth.registerWithGithub().subscribe(
-      res => {
-        this.setState({ ...initialState });
-        this.setState({ isDone: true });
-        this.props.history.push(routes.Questions);
-      },
-      error => {
-        this.setState(byPropKey('error', error));
-      }
-    );
-    this.setState({ isGithubLoading: false });
-  };
+	onFacebookClick = () => {
+		this.setState({ isFacebookLoading: true });
+		auth.registerWithFacebook().subscribe(
+			res => {
+				console.log(res);
+				this.setState({ ...initialState });
+				this.setState({ isDone: true });
+			},
+			error => {
+				this.setState(byPropKey('error', error));
+			}
+		);
+		this.setState({ isFacebookLoading: false });
+	};
 
-  render() {
-    const { email, passwordOne, passwordTwo, error } = this.state;
+	onGithubClick = () => {
+		this.setState({ isGithubLoading: true });
+		auth.registerWithGithub().subscribe(
+			res => {
+				this.setState({ ...initialState });
+				this.setState({ isDone: true });
+			},
+			error => {
+				this.setState(byPropKey('error', error));
+			}
+		);
+		this.setState({ isGithubLoading: false });
+	};
 
-    const isInvalid =
-      passwordOne !== passwordTwo || passwordOne === '' || email === '';
+	render() {
+		const { email, passwordOne, passwordTwo, error } = this.state;
 
-    return (
-      <div>
-        <h3 style={{ textAlign: 'center' }}>Зареєструйтеся</h3>
-        <form onSubmit={this.onSubmit} className="signUpForm">
-          <TextField
-            value={email}
-            id="email"
-            onChange={event =>
-              this.setState(byPropKey('email', event.target.value))
-            }
-            type="text"
-            floatingLabelText="Email адреса"
-            className="input-field"
-          />
+		const isInvalid =
+			passwordOne !== passwordTwo || passwordOne === '' || email === '';
 
-          <TextField
-            value={passwordOne}
-            id="passwordOne"
-            onChange={event =>
-              this.setState(byPropKey('passwordOne', event.target.value))
-            }
-            type="password"
-            floatingLabelText="Ваш пароль"
-            className="input-field"
-          />
+		return (
+			<div>
+				<h3 style={{ textAlign: 'center' }}>Зареєструйтеся</h3>
+				<form onSubmit={this.onSubmit} className="signUpForm">
+					<TextField
+						value={email}
+						id="email"
+						onChange={event =>
+							this.setState(byPropKey('email', event.target.value))
+						}
+						type="text"
+						floatingLabelText="Email адреса"
+						className="input-field"
+					/>
 
-          <TextField
-            value={passwordTwo}
-            id="passwordTwo"
-            onChange={event =>
-              this.setState(byPropKey('passwordTwo', event.target.value))
-            }
-            type="password"
-            floatingLabelText="Підтвердьте пароль"
-            className="input-field"
-          />
+					<TextField
+						value={passwordOne}
+						id="passwordOne"
+						onChange={event =>
+							this.setState(byPropKey('passwordOne', event.target.value))
+						}
+						type="password"
+						floatingLabelText="Ваш пароль"
+						className="input-field"
+					/>
 
-          {this.state.isSignUpLoading ? (
-            <CircularProgress />
-          ) : (
-            <RaisedButton
-              type="submit"
-              disabled={isInvalid}
-              primary={true}
-              label="Зареєструватися"
-            />
-          )}
+					<TextField
+						value={passwordTwo}
+						id="passwordTwo"
+						onChange={event =>
+							this.setState(byPropKey('passwordTwo', event.target.value))
+						}
+						type="password"
+						floatingLabelText="Підтвердьте пароль"
+						className="input-field"
+					/>
 
-          {error && <p>{error.message}</p>}
-        </form>
-        <h3 style={{ textAlign: 'center' }}>Або увійдіть за допомогою</h3>
-        <div className="socialButtons">
-          {this.state.isGoogleLoading ? (
-            <CircularProgress />
-          ) : (
-            <RaisedButton
-              label="Google"
-              backgroundColor="#dd4b39"
-              labelPosition="after"
-              icon={<FontIcon className="ion-social-googleplus" />}
-              onClick={this.onGoogleClick}
-            />
-          )}
+					{this.state.isSignUpLoading ? (
+						<CircularProgress />
+					) : (
+						<RaisedButton
+							type="submit"
+							disabled={isInvalid}
+							primary={true}
+							label="Зареєструватися"
+						/>
+					)}
 
-          {this.state.isFacebookLoading ? (
-            <CircularProgress />
-          ) : (
-            <RaisedButton
-              label="Facebook"
-              backgroundColor="#3b5998"
-              labelPosition="after"
-              icon={<FontIcon className="ion-social-facebook" />}
-              onClick={this.onFacebookClick}
-            />
-          )}
+					{error && <p>{error.message}</p>}
+				</form>
+				<h3 style={{ textAlign: 'center' }}>Або увійдіть за допомогою</h3>
+				<div className="socialButtons">
+					{this.state.isGoogleLoading ? (
+						<CircularProgress />
+					) : (
+						<RaisedButton
+							label="Google"
+							backgroundColor="#dd4b39"
+							labelPosition="after"
+							icon={<FontIcon className="ion-social-googleplus" />}
+							onClick={this.onGoogleClick}
+						/>
+					)}
 
-          {this.state.isGithubLoading ? (
-            <CircularProgress />
-          ) : (
-            <RaisedButton
-              label="Github"
-              labelPosition="after"
-              icon={<FontIcon className="ion-social-github" />}
-              onClick={this.onGithubClick}
-            />
-          )}
+					{this.state.isFacebookLoading ? (
+						<CircularProgress />
+					) : (
+						<RaisedButton
+							label="Facebook"
+							backgroundColor="#3b5998"
+							labelPosition="after"
+							icon={<FontIcon className="ion-social-facebook" />}
+							onClick={this.onFacebookClick}
+						/>
+					)}
 
-          <Snackbar
-            open={true}
-            message="Event added to your calendar"
-            autoHideDuration={4000}
-            onRequestClose={this.handleRequestClose}
-          />
-        </div>
-      </div>
-    );
-  }
+					{this.state.isGithubLoading ? (
+						<CircularProgress />
+					) : (
+						<RaisedButton
+							label="Github"
+							labelPosition="after"
+							icon={<FontIcon className="ion-social-github" />}
+							onClick={this.onGithubClick}
+						/>
+					)}
+
+					<Snackbar
+						open={this.state.isDone}
+						message="Реєстрація успішна!"
+						autoHideDuration={1000}
+						onRequestClose={this.redirectToQuestions}
+						style={{ bottom: '56px' }}
+					/>
+				</div>
+			</div>
+		);
+	}
 }

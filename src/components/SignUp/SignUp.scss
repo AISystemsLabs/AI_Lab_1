@@ -6,7 +6,11 @@
 
     .card{
     width:40%;
-    z-index:0 !important
+    z-index:0 !important;
+
+    .cardheader{
+padding-bottom: 0% !important;
+    }
     }
 }
 
