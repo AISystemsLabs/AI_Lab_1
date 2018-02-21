@@ -1,0 +1,28 @@
+h3{
+  text-align: center;
+  margin: 5px;
+}
+
+.signUpForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .input-field{
+    margin-bottom:5px;
+  }
+}
+
+.socialButtons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between
+}
+
+
+.google-sign-in {
+  background: url("Google.png");
+  background-size: contain;
+  width: 64px;
+  height: 64px;
+}
