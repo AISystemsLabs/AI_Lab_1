@@ -18,7 +18,7 @@
     "rxjs": "^5.5.6"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,json,css}": ["prettier --single-quote --write", "git add"]
+    "src/**/*.{js,jsx,json,css}": ["prettier --single-quote --use-tabs --trailing-comma es5 --write", "git add"]
   },
   "scripts": {
     "precommit": "lint-staged",
