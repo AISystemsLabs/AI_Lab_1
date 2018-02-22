@@ -8,6 +8,7 @@ import {
 } from 'material-ui/BottomNavigation';
 
 import * as routes from '../../constants/routes';
+import * as auth from '../../firebase/auth';
 
 import './Navigation.css';
 
@@ -62,7 +63,11 @@ class Navigation extends Component {
 						<BottomNavigationItem
 							label="Вийти"
 							icon={logOutIcon}
-							onClick={() => this.props.history.push(routes.LANDING)}
+							onClick={() => {
+								auth
+									.logOut()
+									.subscribe(() => this.props.history.push(routes.LANDING));
+							}}
 						/>
 					</BottomNavigation>
 				</Paper>

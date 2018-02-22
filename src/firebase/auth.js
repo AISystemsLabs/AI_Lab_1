@@ -14,9 +14,12 @@ export const registerWithEmail = (email, password) => {
 						isPasswordRegistered: true,
 					},
 					{ merge: true }
+				)
+				.then(() =>
+					Rx.Observable.fromPromise(auth.currentUser.sendEmailVerification())
 				);
 		})
-	).concat(Rx.Observable.fromPromise(auth.currentUser.sendEmailVerification()));
+	);
 };
 
 export const loginWithEmail = (email, password) => {
@@ -88,4 +91,8 @@ export const registerWithFacebook = () => {
 				);
 		})
 	);
+};
+
+export const logOut = () => {
+	return Rx.Observable.fromPromise(auth.signOut());
 };
