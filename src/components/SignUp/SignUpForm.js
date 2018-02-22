@@ -1,12 +1,14 @@
 import React from 'react';
 import * as auth from '../../firebase/auth';
 import * as routes from '../../constants/routes';
+import PasswordHelper from './PasswordHelper';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import FontIcon from 'material-ui/FontIcon';
 import CircularProgress from 'material-ui/CircularProgress';
 import Snackbar from 'material-ui/Snackbar';
+import Popover from 'material-ui/Popover';
 
 import './SignUpForm.css';
 
@@ -20,6 +22,11 @@ const initialState = {
 	isFacebookLoading: false,
 	isGithubLoading: false,
 	isDone: false,
+	isEmailTouched: false,
+	isPasswordOneTouched: false,
+	isPasswordTwoTouched: false,
+	showHelper: false,
+	helperAnchor: null,
 };
 
 const byPropKey = (propertyName, value) => () => ({
@@ -99,10 +106,42 @@ export default class SignUpForm extends React.Component {
 	};
 
 	render() {
-		const { email, passwordOne, passwordTwo, error } = this.state;
+		const {
+			email,
+			passwordOne,
+			passwordTwo,
+			error,
+			isEmailTouched,
+			isPasswordOneTouched,
+			isPasswordTwoTouched,
+		} = this.state;
+
+		const isEmailValid = !isEmailTouched || /.+@.+\..+/i.test(email);
+		const isPasswordOneLength = passwordOne.length >= 6;
+		const isPasswordOneLetter = /[a-zA-z]/.test(passwordOne);
+		const isPasswordOneNumber = /[0-9]/.test(passwordOne);
+		const isPasswordOneValid =
+			isPasswordOneTouched &&
+			isPasswordOneLength &&
+			isPasswordOneLetter &&
+			isPasswordOneNumber;
+
+		const isPasswordTwoEqual = passwordOne === passwordTwo;
+		const isPasswordTwoLength = passwordTwo.length >= 6;
+		const isPasswordTwoLetter = /[a-zA-z]/.test(passwordTwo);
+		const isPasswordTwoNumber = /[0-9]/.test(passwordTwo);
+		const isPasswordTwoValid =
+			isPasswordTwoTouched &&
+			isPasswordTwoLength &&
+			isPasswordTwoLetter &&
+			isPasswordTwoNumber &&
+			isPasswordTwoEqual;
 
 		const isInvalid =
-			passwordOne !== passwordTwo || passwordOne === '' || email === '';
+			!isPasswordOneValid ||
+			!isPasswordTwoValid ||
+			!isEmailValid ||
+			email === '';
 
 		return (
 			<div>
@@ -111,34 +150,69 @@ export default class SignUpForm extends React.Component {
 					<TextField
 						value={email}
 						id="email"
-						onChange={event =>
-							this.setState(byPropKey('email', event.target.value))
-						}
+						onChange={event => {
+							this.setState(byPropKey('email', event.target.value));
+							this.setState(byPropKey('isEmailTouched', true));
+						}}
 						type="text"
 						floatingLabelText="Email адреса"
 						className="input-field"
+						errorText={!isEmailValid && 'Адреса не коректна'}
 					/>
 
 					<TextField
 						value={passwordOne}
 						id="passwordOne"
-						onChange={event =>
-							this.setState(byPropKey('passwordOne', event.target.value))
-						}
+						onChange={event => {
+							this.setState(byPropKey('passwordOne', event.target.value));
+							this.setState(byPropKey('isPasswordOneTouched', true));
+						}}
 						type="password"
 						floatingLabelText="Ваш пароль"
 						className="input-field"
+						errorText={
+							!isPasswordOneTouched
+								? ''
+								: !isPasswordOneLength
+									? 'Пароль має містити мінімум 6 символів'
+									: !isPasswordOneLetter
+										? 'Пароль має містити хоча б одну літеру'
+										: !isPasswordOneNumber
+											? 'Пароль має містити хоча б одну цифру'
+											: ''
+						}
+						onFocus={event => {
+							this.setState({
+								showHelper: true,
+								helperAnchor: event.currentTarget,
+							});
+						}}
+						onBlur={() => this.setState({ showHelper: false })}
 					/>
 
 					<TextField
 						value={passwordTwo}
 						id="passwordTwo"
-						onChange={event =>
-							this.setState(byPropKey('passwordTwo', event.target.value))
-						}
+						onChange={event => {
+							this.setState(byPropKey('passwordTwo', event.target.value));
+							this.setState(byPropKey('isPasswordTwoTouched', true));
+						}}
 						type="password"
 						floatingLabelText="Підтвердьте пароль"
 						className="input-field"
+						errorText={
+							!isPasswordTwoTouched
+								? ''
+								: !isPasswordTwoEqual
+									? 'Паролі повинні збігатися'
+									: !isPasswordTwoLength
+										? 'Пароль має містити мінімум 6 символів'
+										: !isPasswordTwoLetter
+											? 'Пароль має містити хоча б одну літеру'
+											: !isPasswordTwoNumber
+												? 'Пароль має містити хоча б одну цифру'
+												: ''
+						}
 					/>
 
 					{this.state.isSignUpLoading ? (
@@ -198,6 +272,20 @@ export default class SignUpForm extends React.Component {
 						onRequestClose={this.redirectToQuestions}
 						style={{ bottom: '56px' }}
 					/>
+
+					<Popover
+						open={this.state.showHelper}
+						anchorEl={this.state.helperAnchor}
+						anchorOrigin={{ horizontal: 'right', vertical: 'center' }}
+						targetOrigin={{ horizontal: 'left', vertical: 'center' }}
+						canAutoPosition={true}
+					>
+						<PasswordHelper
+							IsLengthOk={isPasswordOneLength}
+							IsLetter={isPasswordOneLetter}
+							IsNumber={isPasswordOneNumber}
+						/>
+					</Popover>
 				</div>
 			</div>
 		);
