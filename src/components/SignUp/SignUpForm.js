@@ -64,8 +64,6 @@ export default class SignUpForm extends React.Component {
 		this.setState({ isGoogleLoading: true });
 		auth.registerWithGoogle().subscribe(
 			res => {
-				console.log(res.user);
-				console.log(res.credential);
 				this.setState({ ...initialState });
 				this.setState({ isDone: true });
 			},
@@ -80,7 +78,6 @@ export default class SignUpForm extends React.Component {
 		this.setState({ isFacebookLoading: true });
 		auth.registerWithFacebook().subscribe(
 			res => {
-				console.log(res);
 				this.setState({ ...initialState });
 				this.setState({ isDone: true });
 			},

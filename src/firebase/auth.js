@@ -8,9 +8,13 @@ export const registerWithEmail = (email, password) => {
 			firestore
 				.collection('users')
 				.doc(email)
-				.set({
-					email: email,
-				});
+				.set(
+					{
+						email: email,
+						isPasswordRegistered: true,
+					},
+					{ merge: true }
+				);
 		})
 	).concat(Rx.Observable.fromPromise(auth.currentUser.sendEmailVerification()));
 };
@@ -24,17 +28,64 @@ export const loginWithEmail = (email, password) => {
 export const registerWithGoogle = () => {
 	auth.useDeviceLanguage();
 	var provider = new firebase.auth.GoogleAuthProvider();
-	return Rx.Observable.fromPromise(auth.signInWithPopup(provider));
+	provider.addScope('email');
+	return Rx.Observable.fromPromise(
+		auth
+			.signInWithPopup(provider)
+			.then(res => {
+				console.log(res);
+				firestore
+					.collection('users')
+					.doc(res.user.providerData[0].email)
+					.set(
+						{
+							email: res.user.providerData[0].email,
+							isGoogleRegistered: true,
+						},
+						{ merge: true }
+					);
+			})
+			.catch(error => {
+				console.log(error);
+			})
+	);
 };
 
 export const registerWithGithub = () => {
 	auth.useDeviceLanguage();
 	var provider = new firebase.auth.GithubAuthProvider();
-	return Rx.Observable.fromPromise(auth.signInWithPopup(provider));
+	return Rx.Observable.fromPromise(
+		auth.signInWithPopup(provider).then(res => {
+			console.log(res);
+			firestore
+				.collection('users')
+				.doc(res.user.providerData[0].email)
+				.set(
+					{
+						email: res.user.providerData[0].email,
+						isGithubRegistered: true,
+					},
+					{ merge: true }
+				);
+		})
+	);
 };
 
 export const registerWithFacebook = () => {
 	auth.useDeviceLanguage();
 	var provider = new firebase.auth.FacebookAuthProvider();
-	return Rx.Observable.fromPromise(auth.signInWithPopup(provider));
+	return Rx.Observable.fromPromise(
+		auth.signInWithPopup(provider).then(res => {
+			firestore
+				.collection('users')
+				.doc(res.user.providerData[0].email)
+				.set(
+					{
+						email: res.user.providerData[0].email,
+						isFacebookRegistered: true,
+					},
+					{ merge: true }
+				);
+		})
+	);
 };
