@@ -96,3 +96,11 @@ export const registerWithFacebook = () => {
 export const logOut = () => {
 	return Rx.Observable.fromPromise(auth.signOut());
 };
+
+export const isLoggedIn = () => {
+	return firebase.auth().currentUser != null;
+};
+
+export const getUser = () => {
+	return firebase.auth().currentUser.providerData[0];
+};

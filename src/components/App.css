@@ -4,7 +4,7 @@
 .pagewrap {
   min-height: 100%;
   /* equal to footer height */
-  margin-bottom: -56px; }
+  margin-bottom: -70px; }
 
 .pagewrap:after {
   content: '';

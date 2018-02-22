@@ -267,7 +267,7 @@ export default class SignUpForm extends React.Component {
 						message="Реєстрація успішна!"
 						autoHideDuration={1000}
 						onRequestClose={this.redirectToQuestions}
-						style={{ bottom: '56px' }}
+						style={{ bottom: '70px' }}
 					/>
 
 					<Popover

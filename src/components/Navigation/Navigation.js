@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Paper from 'material-ui/Paper';
+import Chip from 'material-ui/Chip';
+import Avatar from 'material-ui/Avatar';
 import FontIcon from 'material-ui/FontIcon';
 import {
 	BottomNavigation,
@@ -33,11 +35,27 @@ class Navigation extends Component {
 		return dict[this.props.location.pathname];
 	};
 
+	componentDidMount() {
+		let user = {};
+		if (auth.isLoggedIn()) {
+			console.log(auth.getUser());
+			user = auth.getUser();
+		}
+	}
+
 	render() {
+		let user = {};
+		if (auth.isLoggedIn()) {
+			console.log(auth.getUser());
+			user = auth.getUser();
+		}
 		return (
 			<div className="footer">
 				<Paper zDepth={1}>
-					<BottomNavigation selectedIndex={this.getindexByLocation()}>
+					<BottomNavigation
+						selectedIndex={this.getindexByLocation()}
+						style={{ height: '70px' }}
+					>
 						<BottomNavigationItem
 							label="Анкета"
 							icon={questionsIcon}
@@ -50,25 +68,32 @@ class Navigation extends Component {
 							icon={resultsIcon}
 							onClick={() => this.props.history.push(routes.Results)}
 						/>
-						<BottomNavigationItem
-							label="Увійти"
-							icon={signInIcon}
-							onClick={() => this.props.history.push(routes.SIGN_IN)}
-						/>
-						<BottomNavigationItem
-							label="Реєстрація"
-							icon={signUpIcon}
-							onClick={() => this.props.history.push(routes.SIGN_UP)}
-						/>
-						<BottomNavigationItem
-							label="Вийти"
-							icon={logOutIcon}
-							onClick={() => {
-								auth
-									.logOut()
-									.subscribe(() => this.props.history.push(routes.LANDING));
-							}}
-						/>
+						{!auth.isLoggedIn() && (
+							<BottomNavigationItem
+								label="Увійти"
+								icon={signInIcon}
+								onClick={() => this.props.history.push(routes.SIGN_IN)}
+							/>
+						)}
+						{!auth.isLoggedIn() && (
+							<BottomNavigationItem
+								label="Реєстрація"
+								icon={signUpIcon}
+								onClick={() => this.props.history.push(routes.SIGN_UP)}
+							/>
+						)}
+						{auth.isLoggedIn() && (
+							<BottomNavigationItem
+								label="Вийти"
+								icon={logOutIcon}
+								onClick={() => {
+									auth
+										.logOut()
+										.subscribe(() => this.props.history.push(routes.LANDING));
+								}}
+								className="withChip"
+							/>
+						)}
 					</BottomNavigation>
 				</Paper>
 			</div>
