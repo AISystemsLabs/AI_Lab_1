@@ -199,7 +199,7 @@ export default class SignUpForm extends React.Component {
 						}}
 						type="password"
 						floatingLabelText="Підтвердьте пароль"
-						className="input-field"
+						className="input-field last"
 						errorText={
 							!isPasswordTwoTouched
 								? ''

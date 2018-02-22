@@ -1,11 +1,18 @@
-import { auth } from './firebase';
+import { auth, firestore } from './firebase';
 import * as firebase from 'firebase';
 import Rx from 'rxjs/Rx';
 
 export const registerWithEmail = (email, password) => {
 	return Rx.Observable.fromPromise(
-		auth.createUserWithEmailAndPassword(email, password)
-	);
+		auth.createUserWithEmailAndPassword(email, password).then(() => {
+			firestore
+				.collection('users')
+				.doc(email)
+				.set({
+					email: email,
+				});
+		})
+	).concat(Rx.Observable.fromPromise(auth.currentUser.sendEmailVerification()));
 };
 
 export const loginWithEmail = (email, password) => {
