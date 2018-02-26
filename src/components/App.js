@@ -7,7 +7,7 @@ import Navigation from './Navigation/Navigation';
 import LandingPage from './Landing';
 import SignUpPage from './SignUp/SignUp';
 import SignInPage from './SignIn/SignIn';
-import HomePage from './Home';
+import QuestionsPage from './Questions/Questions';
 import AccountPage from './Account';
 
 import * as routes from '../constants/routes';
@@ -36,9 +36,8 @@ class App extends Component {
 								component={() => <SignInPage />}
 							/>
 							<Route
-								exact
 								path={routes.Questions}
-								component={() => <HomePage />}
+								component={() => <QuestionsPage />}
 							/>
 							<Route
 								exact

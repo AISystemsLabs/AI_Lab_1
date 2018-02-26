@@ -60,7 +60,7 @@ class Navigation extends Component {
 							label="Анкета"
 							icon={questionsIcon}
 							onClick={() => {
-								this.props.history.push(routes.Questions);
+								this.props.history.push('/questions/novice');
 							}}
 						/>
 						<BottomNavigationItem

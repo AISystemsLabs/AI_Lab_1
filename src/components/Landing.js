@@ -11,7 +11,7 @@ class Landing extends Component {
 
 	componentDidMount() {
 		if (auth.isLoggedIn()) {
-			this.props.history.push(routes.Questions);
+			this.props.history.push('/questions/novice');
 		} else {
 			this.props.history.push(routes.SIGN_IN);
 		}

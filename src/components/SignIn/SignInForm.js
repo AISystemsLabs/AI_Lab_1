@@ -34,7 +34,7 @@ export default class SignInForm extends React.Component {
 	}
 
 	redirectToQuestions = () => {
-		this.props.history.push(routes.Questions);
+		this.props.history.push('/routes/questions/novice');
 	};
 
 	onSubmit = event => {
