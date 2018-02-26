@@ -8,7 +8,9 @@ import * as firestore from '../../firebase/firestore';
 class QuestionsPage extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log(firestore.getAnswersPerLevel('email'));
+		firestore.getAnswersPerLevel('email').subscribe(x => {
+			console.log(x);
+		});
 	}
 
 	render() {

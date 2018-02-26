@@ -8,7 +8,9 @@ export const getAnswersPerLevel = level => {
 	var email = auth.getUser().email;
 	var usersCol = firestore.collection('users');
 	var myUser = usersCol.doc(email);
-	Rx.Observable.fromPromise(myUser.get()).subscribe(x => {
-		return x.data()[level];
-	});
+	return Rx.Observable.fromPromise(
+		myUser.get().then(x => {
+			return x.data()[level];
+		})
+	);
 };
