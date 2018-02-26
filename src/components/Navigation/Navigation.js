@@ -91,7 +91,6 @@ class Navigation extends Component {
 										.logOut()
 										.subscribe(() => this.props.history.push(routes.LANDING));
 								}}
-								className="withChip"
 							/>
 						)}
 					</BottomNavigation>
