@@ -9,6 +9,7 @@ import SignUpPage from './SignUp/SignUp';
 import SignInPage from './SignIn/SignIn';
 import QuestionsPage from './Questions/Questions';
 import AccountPage from './Account';
+import withAuthentication from './Helpers/WithAuthentication/withAuthentication';
 
 import * as routes from '../constants/routes';
 import './App.css';
@@ -53,4 +54,4 @@ class App extends Component {
 	}
 }
 
-export default App;
+export default withAuthentication(App);

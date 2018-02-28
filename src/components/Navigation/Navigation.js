@@ -8,6 +8,7 @@ import {
 	BottomNavigation,
 	BottomNavigationItem,
 } from 'material-ui/BottomNavigation';
+import PropTypes from 'prop-types';
 
 import * as routes from '../../constants/routes';
 import * as auth from '../../firebase/auth';
@@ -35,20 +36,8 @@ class Navigation extends Component {
 		return dict[this.props.location.pathname];
 	};
 
-	componentDidMount() {
-		let user = {};
-		if (auth.isLoggedIn()) {
-			console.log(auth.getUser());
-			user = auth.getUser();
-		}
-	}
-
 	render() {
-		let user = {};
-		if (auth.isLoggedIn()) {
-			console.log(auth.getUser());
-			user = auth.getUser();
-		}
+		const isLoggedIn = this.context.authUser != null;
 		return (
 			<div className="footer">
 				<Paper zDepth={1}>
@@ -68,21 +57,21 @@ class Navigation extends Component {
 							icon={resultsIcon}
 							onClick={() => this.props.history.push(routes.Results)}
 						/>
-						{!auth.isLoggedIn() && (
+						{!isLoggedIn && (
 							<BottomNavigationItem
 								label="Увійти"
 								icon={signInIcon}
 								onClick={() => this.props.history.push(routes.SIGN_IN)}
 							/>
 						)}
-						{!auth.isLoggedIn() && (
+						{!isLoggedIn && (
 							<BottomNavigationItem
 								label="Реєстрація"
 								icon={signUpIcon}
 								onClick={() => this.props.history.push(routes.SIGN_UP)}
 							/>
 						)}
-						{auth.isLoggedIn() && (
+						{isLoggedIn && (
 							<BottomNavigationItem
 								label="Вийти"
 								icon={logOutIcon}
@@ -99,5 +88,9 @@ class Navigation extends Component {
 		);
 	}
 }
+
+Navigation.contextTypes = {
+	authUser: PropTypes.object,
+};
 
 export default withRouter(Navigation);
