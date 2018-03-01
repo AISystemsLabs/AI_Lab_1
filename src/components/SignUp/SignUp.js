@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import SignUpForm from './SignUpForm';
-import SignUpLink from './SignUpLink';
+import SignInLink from '../SignIn/SignInLink';
 
 import './SignUp.css';
 
@@ -27,6 +27,7 @@ class SignUp extends Component {
 					<CardText>
 						<SignUpForm history={this.props.history} />
 					</CardText>
+					<SignInLink />
 				</Card>
 			</div>
 		);

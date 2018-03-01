@@ -3,7 +3,7 @@ h3 {
 	margin: 5px;
 }
 
-.signUpForm {
+.signInForm {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -21,11 +21,4 @@ h3 {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-}
-
-.google-sign-in {
-	background: url('Google.png');
-	background-size: contain;
-	width: 64px;
-	height: 64px;
 }
