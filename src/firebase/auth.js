@@ -12,6 +12,11 @@ export const registerWithEmail = (email, password) => {
 					{
 						email: email,
 						isPasswordRegistered: true,
+						novice: [-1, -1, -1, -1],
+						beginner: [-1, -1, -1],
+						competent: [-1, -1, -1],
+						proficient: [-1, -1, -1],
+						expert: [-1, -1, -1],
 					},
 					{ merge: true }
 				)
@@ -44,6 +49,11 @@ export const registerWithGoogle = () => {
 						{
 							email: res.user.providerData[0].email,
 							isGoogleRegistered: true,
+							novice: [-1, -1, -1, -1],
+							beginner: [-1, -1, -1],
+							competent: [-1, -1, -1],
+							proficient: [-1, -1, -1],
+							expert: [-1, -1, -1],
 						},
 						{ merge: true }
 					);
@@ -52,6 +62,13 @@ export const registerWithGoogle = () => {
 				console.log(error);
 			})
 	);
+};
+
+export const logInWithGoogle = () => {
+	auth.useDeviceLanguage();
+	var provider = new firebase.auth.GoogleAuthProvider();
+	provider.addScope('email');
+	return Rx.Observable.fromPromise(auth.signInWithPopup(provider));
 };
 
 export const registerWithGithub = () => {
@@ -67,11 +84,23 @@ export const registerWithGithub = () => {
 					{
 						email: res.user.providerData[0].email,
 						isGithubRegistered: true,
+						novice: [-1, -1, -1, -1],
+						beginner: [-1, -1, -1],
+						competent: [-1, -1, -1],
+						proficient: [-1, -1, -1],
+						expert: [-1, -1, -1],
 					},
 					{ merge: true }
 				);
 		})
 	);
+};
+
+export const logInWithGithub = () => {
+	auth.useDeviceLanguage();
+	var provider = new firebase.auth.GithubAuthProvider();
+	provider.addScope('email');
+	return Rx.Observable.fromPromise(auth.signInWithPopup(provider));
 };
 
 export const registerWithFacebook = () => {
@@ -86,11 +115,23 @@ export const registerWithFacebook = () => {
 					{
 						email: res.user.providerData[0].email,
 						isFacebookRegistered: true,
+						novice: [-1, -1, -1, -1],
+						beginner: [-1, -1, -1],
+						competent: [-1, -1, -1],
+						proficient: [-1, -1, -1],
+						expert: [-1, -1, -1],
 					},
 					{ merge: true }
 				);
 		})
 	);
+};
+
+export const logInWithFacebook = () => {
+	auth.useDeviceLanguage();
+	var provider = new firebase.auth.FacebookAuthProvider();
+	provider.addScope('email');
+	return Rx.Observable.fromPromise(auth.signInWithPopup(provider));
 };
 
 export const logOut = () => {

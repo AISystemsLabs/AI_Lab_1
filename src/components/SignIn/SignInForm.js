@@ -31,10 +31,15 @@ export default class SignInForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { ...initialState };
+
+		this.onGithubClick = this.onGithubClick.bind(this);
+		this.onGoogleClick = this.onGoogleClick.bind(this);
+		this.onFacebookClick = this.onFacebookClick.bind(this);
+		this.onSubmit = this.onSubmit.bind(this);
 	}
 
 	redirectToQuestions = () => {
-		this.props.history.push('/routes/questions/novice');
+		this.props.history.push('/questions/novice');
 	};
 
 	onSubmit = event => {
@@ -45,55 +50,60 @@ export default class SignInForm extends React.Component {
 			() => {
 				this.setState({ ...initialState });
 				this.setState({ isDone: true });
+				this.setState({ isSignInLoading: false });
 			},
 			error => {
 				this.setState(byPropKey('error', 'Некоректний логін чи пароль'));
+				this.setState({ isSignInLoading: false });
 			}
 		);
-		this.setState({ isSignInLoading: false });
 		event.preventDefault();
 	};
 
-	onGoogleClick = () => {
+	onGoogleClick = event => {
 		this.setState({ isGoogleLoading: true });
-		auth.registerWithGoogle().subscribe(
+		auth.logInWithGoogle().subscribe(
 			res => {
 				this.setState({ ...initialState });
 				this.setState({ isDone: true });
+				this.setState({ isGoogleLoading: false });
 			},
 			error => {
 				this.setState(byPropKey('error', error));
+				this.setState({ isGoogleLoading: false });
 			}
 		);
-		this.setState({ isGoogleLoading: false });
+		event.preventDefault();
 	};
 
 	onFacebookClick = () => {
 		this.setState({ isFacebookLoading: true });
-		auth.registerWithFacebook().subscribe(
+		auth.logInWithFacebook().subscribe(
 			res => {
 				this.setState({ ...initialState });
 				this.setState({ isDone: true });
+				this.setState({ isFacebookLoading: false });
 			},
 			error => {
 				this.setState(byPropKey('error', error));
+				this.setState({ isFacebookLoading: false });
 			}
 		);
-		this.setState({ isFacebookLoading: false });
 	};
 
 	onGithubClick = () => {
 		this.setState({ isGithubLoading: true });
-		auth.registerWithGithub().subscribe(
+		auth.logInWithGithub().subscribe(
 			res => {
 				this.setState({ ...initialState });
 				this.setState({ isDone: true });
+				this.setState({ isGithubLoading: false });
 			},
 			error => {
 				this.setState(byPropKey('error', error));
+				this.setState({ isGithubLoading: false });
 			}
 		);
-		this.setState({ isGithubLoading: false });
 	};
 
 	render() {

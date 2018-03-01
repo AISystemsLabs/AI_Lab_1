@@ -51,12 +51,13 @@ export default class SignUpForm extends React.Component {
 			() => {
 				this.setState({ ...initialState });
 				this.setState({ isDone: true });
+				this.setState({ isSignUpLoading: false });
 			},
 			error => {
 				this.setState(byPropKey('error', error));
+				this.setState({ isSignUpLoading: false });
 			}
 		);
-		this.setState({ isSignUpLoading: false });
 		event.preventDefault();
 	};
 
@@ -66,12 +67,13 @@ export default class SignUpForm extends React.Component {
 			res => {
 				this.setState({ ...initialState });
 				this.setState({ isDone: true });
+				this.setState({ isGoogleLoading: false });
 			},
 			error => {
 				this.setState(byPropKey('error', error));
+				this.setState({ isGoogleLoading: false });
 			}
 		);
-		this.setState({ isGoogleLoading: false });
 	};
 
 	onFacebookClick = () => {
@@ -80,12 +82,13 @@ export default class SignUpForm extends React.Component {
 			res => {
 				this.setState({ ...initialState });
 				this.setState({ isDone: true });
+				this.setState({ isFacebookLoading: false });
 			},
 			error => {
 				this.setState(byPropKey('error', error));
+				this.setState({ isFacebookLoading: false });
 			}
 		);
-		this.setState({ isFacebookLoading: false });
 	};
 
 	onGithubClick = () => {
@@ -94,12 +97,13 @@ export default class SignUpForm extends React.Component {
 			res => {
 				this.setState({ ...initialState });
 				this.setState({ isDone: true });
+				this.setState({ isGithubLoading: false });
 			},
 			error => {
 				this.setState(byPropKey('error', error));
+				this.setState({ isGithubLoading: false });
 			}
 		);
-		this.setState({ isGithubLoading: false });
 	};
 
 	render() {

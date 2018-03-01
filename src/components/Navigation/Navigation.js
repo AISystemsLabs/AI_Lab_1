@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Paper from 'material-ui/Paper';
-import Chip from 'material-ui/Chip';
-import Avatar from 'material-ui/Avatar';
 import FontIcon from 'material-ui/FontIcon';
 import {
 	BottomNavigation,

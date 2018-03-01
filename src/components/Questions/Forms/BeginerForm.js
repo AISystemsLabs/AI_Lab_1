@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import './Form.css';
 
-class NoviceForm extends React.Component {
+class BeginnerForm extends React.Component {
 	constructor(props, context) {
 		super(props);
 		this.saveChanges = this.saveChanges.bind(this);
@@ -13,7 +13,7 @@ class NoviceForm extends React.Component {
 
 	saveChanges(answers) {
 		firestore
-			.writeAnswersPerLevel('novice', answers, this.context.authUser)
+			.writeAnswersPerLevel('beginner', answers, this.context.authUser)
 			.subscribe(res => console.log('ok'));
 	}
 
@@ -22,7 +22,7 @@ class NoviceForm extends React.Component {
 		return (
 			<form>
 				<div className="questionBox">
-					<h3>Ви переживаєте за успіх в роботі?</h3>
+					<h3>Чи використовуєте Ви власний досвід при вирішенні задач?</h3>
 					<RadioButtonGroup
 						name="firstQuestion"
 						valueSelected={answers && answers[0]}
@@ -31,16 +31,16 @@ class NoviceForm extends React.Component {
 							this.saveChanges(answers);
 						}}
 					>
-						<RadioButton value={0} label="Сильно" />
+						<RadioButton value={0} label="Зрідка" />
 
-						<RadioButton value={1} label="Не дуже" />
+						<RadioButton value={1} label="Частково" />
 
-						<RadioButton value={2} label="Спокійний" />
+						<RadioButton value={2} label="Ні" />
 					</RadioButtonGroup>
 				</div>
 
 				<div className="questionBox">
-					<h3>Як швидко ви прагнете досягти результату?</h3>
+					<h3>Чи користуєтесь Ви фіксованими правилами для вирішення задач?</h3>
 					<RadioButtonGroup
 						name="secondQuestion"
 						valueSelected={answers && answers[1]}
@@ -49,16 +49,16 @@ class NoviceForm extends React.Component {
 							this.saveChanges(answers);
 						}}
 					>
-						<RadioButton value={0} label="Поступово" />
+						<RadioButton value={0} label="Так" />
 
-						<RadioButton value={1} label="Якомога швидше" />
+						<RadioButton value={1} label="В окремих випадках" />
 
-						<RadioButton value={2} label="Дуже" />
+						<RadioButton value={2} label="Ні, вони не потрібні" />
 					</RadioButtonGroup>
 				</div>
 
 				<div className="questionBox">
-					<h3>Легко попадаєте в тупик при проблемах в роботі?</h3>
+					<h3>Чи відчуваєте Ви загальний контекст вирішення задачі?</h3>
 					<RadioButtonGroup
 						name="thirdQuestion"
 						onChange={(event, value) => {
@@ -67,25 +67,7 @@ class NoviceForm extends React.Component {
 						}}
 						valueSelected={answers && answers[2]}
 					>
-						<RadioButton value={0} label="Неодмінно!" />
-
-						<RadioButton value={1} label="Поступово" />
-
-						<RadioButton value={2} label="Зрідка" />
-					</RadioButtonGroup>
-				</div>
-
-				<div className="questionBox">
-					<h3>Чи потрібен Вам чіткий алгоритм для вирішення задач?</h3>
-					<RadioButtonGroup
-						name="fourthQuestion"
-						onChange={(event, value) => {
-							answers[3] = value;
-							this.saveChanges(answers);
-						}}
-						valueSelected={answers && answers[3]}
-					>
-						<RadioButton value={0} label="Так!" />
+						<RadioButton value={0} label="Так" />
 
 						<RadioButton value={1} label="Частково" />
 
@@ -97,8 +79,8 @@ class NoviceForm extends React.Component {
 	}
 }
 
-NoviceForm.contextTypes = {
+BeginnerForm.contextTypes = {
 	authUser: PropTypes.object,
 };
 
-export default NoviceForm;
+export default BeginnerForm;

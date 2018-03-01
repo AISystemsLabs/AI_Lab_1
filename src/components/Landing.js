@@ -2,14 +2,9 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import * as auth from '../firebase/auth';
 import * as routes from '../constants/routes';
 
 class Landing extends Component {
-	constructor(props) {
-		super(props);
-	}
-
 	componentDidMount() {
 		if (this.context.authUser != null) {
 			this.props.history.push('/questions/novice');

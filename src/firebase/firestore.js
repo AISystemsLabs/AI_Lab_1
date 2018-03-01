@@ -13,3 +13,20 @@ export const getAnswersPerLevel = (level, user) => {
 		})
 	);
 };
+
+export const getRef = user => {
+	var email = user.providerData[0].email;
+	var usersCol = firestore.collection('users');
+	var myUser = usersCol.doc(email);
+
+	return myUser;
+};
+
+export const writeAnswersPerLevel = (level, value, user) => {
+	var email = user.providerData[0].email;
+	var usersCol = firestore.collection('users');
+	var myUser = usersCol.doc(email);
+	var obj = {};
+	obj[level] = value;
+	return Rx.Observable.fromPromise(myUser.set(obj, { merge: true }));
+};
