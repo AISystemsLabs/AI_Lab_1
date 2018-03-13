@@ -8,7 +8,7 @@ import LandingPage from './Landing';
 import SignUpPage from './SignUp/SignUp';
 import SignInPage from './SignIn/SignIn';
 import QuestionsPage from './Questions/Questions';
-import AccountPage from './Account';
+import ResultsPage from './Results/ResultsPage';
 import withAuthentication from './Helpers/WithAuthentication/withAuthentication';
 
 import * as routes from '../constants/routes';
@@ -43,7 +43,7 @@ class App extends Component {
 							<Route
 								exact
 								path={routes.Results}
-								component={() => <AccountPage />}
+								component={() => <ResultsPage />}
 							/>
 						</div>
 						<Navigation />
