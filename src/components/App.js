@@ -45,6 +45,11 @@ class App extends Component {
 								path={routes.Results}
 								component={() => <ResultsPage />}
 							/>
+							<Route
+								exact
+								path={'/pavich'}
+								component={() => <h1>Your Pavich vas succesfully deleted!</h1>}
+							/>
 						</div>
 						<Navigation />
 					</div>

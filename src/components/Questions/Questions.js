@@ -44,6 +44,9 @@ class QuestionsPage extends React.Component {
 		this.waitForUser = this.waitForUser.bind(this);
 		this.handlePrev = this.handlePrev.bind(this);
 		this.handleNext = this.handleNext.bind(this);
+
+		console.log(new Date());
+		this.waitForUser();
 	}
 
 	handlePrev() {
@@ -127,11 +130,6 @@ class QuestionsPage extends React.Component {
 				break;
 		}
 	}
-
-	componentDidMount = () => {
-		console.log(new Date());
-		this.waitForUser();
-	};
 
 	render() {
 		return (
