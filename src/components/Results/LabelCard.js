@@ -9,23 +9,19 @@ export default class LabelCard extends React.Component {
 		super(props);
 	}
 
-	static propTypes = {
-		type: PropTypes.string,
-		payload: PropTypes.array,
-		label: PropTypes.string,
-	};
-
 	render() {
 		if (this.props.active) {
 			return (
 				<Card className="toolTipcard">
 					<Paper>
 						<CardHeader
-							title={this.props.payload[0].header}
+							title={this.props.payload[0].payload.label}
 							className="header"
 						/>
 					</Paper>
-					<CardText className="text">{this.props.paylaod[0].text}</CardText>
+					<CardText className="text">
+						{this.props.payload[0].payload.text}
+					</CardText>
 				</Card>
 			);
 		}

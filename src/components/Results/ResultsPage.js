@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card, CardText } from 'material-ui/Card';
 import * as recharts from 'recharts';
-import * as V from 'victory';
 import * as firestore from '../../firebase/firestore';
 import { texts } from './Texts';
 import * as renderActiveShape from './renderActiveShape';
@@ -19,6 +18,10 @@ class ResultsPage extends React.Component {
 		super(props);
 		this.state = {
 			data: [],
+			tooltip: <div />,
+			isTooltipActive: false,
+			tooltipX: 0,
+			tooltipY: 0,
 			colors: texts.map(x => {
 				return { id: x.id, color: randomColors({ luminosity: 'bright' }) };
 			}),
@@ -54,7 +57,7 @@ class ResultsPage extends React.Component {
 							id: x.id,
 							label: x.header,
 							ukrLabel: x.ukrHeader,
-							card: <LabelCard header={x.header} text={x.description} />,
+							text: x.description,
 							value: points,
 							fill: this.getColorById(x.id),
 						};
@@ -71,7 +74,7 @@ class ResultsPage extends React.Component {
 		return sum;
 	}
 
-	onPieEnter(data, index) {
+	onPieEnter(data, index, e) {
 		this.setState({
 			activeIndex: index,
 		});
@@ -86,24 +89,36 @@ class ResultsPage extends React.Component {
 		return (
 			<Card className="mainCard">
 				<CardText>
-					{/* <recharts.PieChart width={500} height={486}>
-            <recharts.Pie paddingAngle={0} outerRadius="50%" labelLine={false} data={this.state.data} dataKey="value" nameKey="label" cx="50%" cy="50%" activeShape={renderActiveShape.renderActiveShape} legendType="circle" activeIndex={this.state.activeIndex} onMouseEnter={this.onPieEnter} label={true} />
-            {this.state.data.map((x, index) => (
-              <recharts.Cell key={index} fill={this.getColorById(x.id)} />
-            ))}
+					<recharts.PieChart width={500} height={486}>
+						<recharts.Pie
+							paddingAngle={0}
+							outerRadius="50%"
+							labelLine={false}
+							data={this.state.data}
+							dataKey="value"
+							nameKey="label"
+							cx="50%"
+							cy="50%"
+							activeShape={renderActiveShape.renderActiveShape}
+							legendType="circle"
+							activeIndex={this.state.activeIndex}
+							onMouseOver={this.onPieEnter}
+							label={true}
+						/>
+						{this.state.data.map((x, index) => (
+							<recharts.Cell key={index} fill={this.getColorById(x.id)} />
+						))}
 
-            <recharts.Legend verticalAlign="top" layout="vertical" verticalAlign="bottom" />
+						<recharts.Legend
+							verticalAlign="top"
+							layout="vertical"
+							verticalAlign="bottom"
+						/>
 
-            <recharts.Tooltip content={<LabelCard />} />
-          </recharts.PieChart> */}
-					<V.VictoryPie
-						data={this.state.data}
-						x="ukrLabel"
-						y="value"
-						cornerRadius={50}
-						theme={V.VictoryTheme.material}
-					/>
+						<recharts.Tooltip content={<LabelCard />} />
+					</recharts.PieChart>
 				</CardText>
+				{<div style={{ top: this.state.tooltipX, width: 100, height: 100 }} />}
 			</Card>
 		);
 	}
