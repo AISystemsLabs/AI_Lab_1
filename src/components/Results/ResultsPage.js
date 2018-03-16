@@ -1,9 +1,12 @@
 import React from 'react';
 import { Card, CardText } from 'material-ui/Card';
 import * as recharts from 'recharts';
+import * as V from 'victory';
 import * as firestore from '../../firebase/firestore';
 import { texts } from './Texts';
+import * as renderActiveShape from './renderActiveShape';
 import PropTypes from 'prop-types';
+import * as randomColors from 'randomcolor';
 
 import withAuthorization from '../Helpers/WithAuthorization/withAuthorization';
 import { withRouter } from 'react-router-dom';
@@ -11,93 +14,18 @@ import { withRouter } from 'react-router-dom';
 import LabelCard from './LabelCard';
 import './ResultsPage.css';
 
-const renderActiveShape = props => {
-	const RADIAN = Math.PI / 180;
-	const {
-		cx,
-		cy,
-		midAngle,
-		innerRadius,
-		outerRadius,
-		startAngle,
-		endAngle,
-		fill,
-		payload,
-		percent,
-		value,
-	} = props;
-	const sin = Math.sin(-RADIAN * midAngle);
-	const cos = Math.cos(-RADIAN * midAngle);
-	const sx = cx + (outerRadius + 10) * cos;
-	const sy = cy + (outerRadius + 10) * sin;
-	const mx = cx + (outerRadius + 30) * cos;
-	const my = cy + (outerRadius + 30) * sin;
-	const ex = mx + (cos >= 0 ? 1 : -1) * 22;
-	const ey = my;
-	const textAnchor = cos >= 0 ? 'start' : 'end';
-
-	return (
-		<g>
-			<text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
-				{payload.name}
-			</text>
-			<recharts.Sector
-				cx={cx}
-				cy={cy}
-				innerRadius={innerRadius}
-				outerRadius={outerRadius}
-				startAngle={startAngle}
-				endAngle={endAngle}
-				fill={fill}
-			/>
-			<recharts.Sector
-				cx={cx}
-				cy={cy}
-				startAngle={startAngle}
-				endAngle={endAngle}
-				innerRadius={outerRadius + 6}
-				outerRadius={outerRadius + 10}
-				fill={fill}
-			/>
-			<path
-				d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
-				stroke={fill}
-				fill="none"
-			/>
-			<circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-			<text
-				x={ex + (cos >= 0 ? 1 : -1) * 12}
-				y={ey}
-				textAnchor={textAnchor}
-				fill="#333"
-			>{`PV ${value}`}</text>
-			<text
-				x={ex + (cos >= 0 ? 1 : -1) * 12}
-				y={ey}
-				dy={18}
-				textAnchor={textAnchor}
-				fill="#999"
-			>
-				{`(Rate ${(percent * 100).toFixed(2)}%)`}
-			</text>
-		</g>
-	);
-};
-
 class ResultsPage extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			data: [
-				{
-					id: 'loading',
-					value: 0,
-					label: 'loading',
-				},
-			],
+			data: [],
+			colors: texts.map(x => {
+				return { id: x.id, color: randomColors({ luminosity: 'bright' }) };
+			}),
 		};
 		this.waitForUser = this.waitForUser.bind(this);
 		this.onPieEnter = this.onPieEnter.bind(this);
+		this.getColorById = this.getColorById.bind(this);
 	}
 
 	componentDidMount = () => {
@@ -125,8 +53,10 @@ class ResultsPage extends React.Component {
 						return {
 							id: x.id,
 							label: x.header,
+							ukrLabel: x.ukrHeader,
 							card: <LabelCard header={x.header} text={x.description} />,
 							value: points,
+							fill: this.getColorById(x.id),
 						};
 					}),
 				});
@@ -147,27 +77,32 @@ class ResultsPage extends React.Component {
 		});
 	}
 
+	getColorById(id) {
+		let temp = this.state.colors.find(y => y.id == id).color;
+		return temp;
+	}
+
 	render() {
 		return (
 			<Card className="mainCard">
 				<CardText>
-					<recharts.ResponsiveContainer width={450} height={450}>
-						<recharts.PieChart width={450} height={450}>
-							<recharts.Pie
-								paddingAngle={10}
-								labelLine={false}
-								data={this.state.data}
-								dataKey="value"
-								nameKey="label"
-								cx="50%"
-								cy="50%"
-								activeShape={renderActiveShape}
-								activeIndex={this.state.activeIndex}
-								onMouseEnter={this.onPieEnter}
-								label={true}
-							/>
-						</recharts.PieChart>
-					</recharts.ResponsiveContainer>
+					{/* <recharts.PieChart width={500} height={486}>
+            <recharts.Pie paddingAngle={0} outerRadius="50%" labelLine={false} data={this.state.data} dataKey="value" nameKey="label" cx="50%" cy="50%" activeShape={renderActiveShape.renderActiveShape} legendType="circle" activeIndex={this.state.activeIndex} onMouseEnter={this.onPieEnter} label={true} />
+            {this.state.data.map((x, index) => (
+              <recharts.Cell key={index} fill={this.getColorById(x.id)} />
+            ))}
+
+            <recharts.Legend verticalAlign="top" layout="vertical" verticalAlign="bottom" />
+
+            <recharts.Tooltip content={<LabelCard />} />
+          </recharts.PieChart> */}
+					<V.VictoryPie
+						data={this.state.data}
+						x="ukrLabel"
+						y="value"
+						cornerRadius={50}
+						theme={V.VictoryTheme.material}
+					/>
 				</CardText>
 			</Card>
 		);
