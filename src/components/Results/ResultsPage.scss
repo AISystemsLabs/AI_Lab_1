@@ -1,4 +1,10 @@
-.mainCard {
-	width: 500px;
-	height: 500px;
+.resultsContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+
+	.mainCard {
+		width: 624px;
+		height: 588px;
+	}
 }

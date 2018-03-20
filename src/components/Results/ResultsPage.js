@@ -87,39 +87,37 @@ class ResultsPage extends React.Component {
 
 	render() {
 		return (
-			<Card className="mainCard">
-				<CardText>
-					<recharts.PieChart width={500} height={486}>
-						<recharts.Pie
-							paddingAngle={0}
-							outerRadius="50%"
-							labelLine={false}
-							data={this.state.data}
-							dataKey="value"
-							nameKey="label"
-							cx="50%"
-							cy="50%"
-							activeShape={renderActiveShape.renderActiveShape}
-							legendType="circle"
-							activeIndex={this.state.activeIndex}
-							onMouseOver={this.onPieEnter}
-							label={true}
-						/>
-						{this.state.data.map((x, index) => (
-							<recharts.Cell key={index} fill={this.getColorById(x.id)} />
-						))}
+			<div className="resultsContainer">
+				<Card className="mainCard">
+					<CardText>
+						<recharts.PieChart width={500} height={486}>
+							<recharts.Pie
+								paddingAngle={0}
+								outerRadius="50%"
+								labelLine={false}
+								data={this.state.data}
+								dataKey="value"
+								nameKey="label"
+								cx="50%"
+								cy="50%"
+								activeShape={renderActiveShape.renderActiveShape}
+								activeIndex={this.state.activeIndex}
+								legendType="circle"
+								label={true}
+								onMouseOver={this.onPieEnter}
+							/>
+							{this.state.data.map((x, index) => (
+								<recharts.Cell key={index} fill={this.getColorById(x.id)} />
+							))}
 
-						<recharts.Legend
-							verticalAlign="top"
-							layout="vertical"
-							verticalAlign="bottom"
-						/>
+							<recharts.Legend layout="vertical" verticalAlign="bottom" />
 
-						<recharts.Tooltip content={<LabelCard />} />
-					</recharts.PieChart>
-				</CardText>
-				{<div style={{ top: this.state.tooltipX, width: 100, height: 100 }} />}
-			</Card>
+							<recharts.Tooltip content={<LabelCard />} />
+						</recharts.PieChart>
+					</CardText>
+				</Card>
+				<Card className="mainCard" />
+			</div>
 		);
 	}
 }
