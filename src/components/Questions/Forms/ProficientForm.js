@@ -31,11 +31,11 @@ class ProficientForm extends React.Component {
 							this.saveChanges(answers);
 						}}
 					>
-						<RadioButton value={0} label="Так" />
+						<RadioButton value={0} label="Так (5)" />
 
-						<RadioButton value={1} label="В окремих деталях" />
+						<RadioButton value={1} label="В окремих деталях (3)" />
 
-						<RadioButton value={2} label="В загальному" />
+						<RadioButton value={2} label="В загальному (2)" />
 					</RadioButtonGroup>
 				</div>
 
@@ -49,11 +49,11 @@ class ProficientForm extends React.Component {
 							this.saveChanges(answers);
 						}}
 					>
-						<RadioButton value={0} label="Так" />
+						<RadioButton value={0} label="Так (5)" />
 
-						<RadioButton value={1} label="Зрідка" />
+						<RadioButton value={1} label="Зрідка (3)" />
 
-						<RadioButton value={2} label="Коли є потреба" />
+						<RadioButton value={2} label="Коли є потреба (2)" />
 					</RadioButtonGroup>
 				</div>
 
@@ -67,11 +67,11 @@ class ProficientForm extends React.Component {
 						}}
 						valueSelected={answers && answers[2]}
 					>
-						<RadioButton value={0} label="Так" />
+						<RadioButton value={0} label="Так (5)" />
 
-						<RadioButton value={1} label="Зрідка" />
+						<RadioButton value={1} label="Зрідка (3)" />
 
-						<RadioButton value={2} label="Коли є потреба" />
+						<RadioButton value={2} label="Коли є потреба (2)" />
 					</RadioButtonGroup>
 				</div>
 			</form>

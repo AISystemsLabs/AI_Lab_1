@@ -10,21 +10,13 @@ export default class LabelCard extends React.Component {
 	}
 
 	render() {
-		if (this.props.active) {
-			return (
-				<Card className="toolTipcard">
-					<Paper>
-						<CardHeader
-							title={this.props.payload[0].payload.label}
-							className="header"
-						/>
-					</Paper>
-					<CardText className="text">
-						{this.props.payload[0].payload.text}
-					</CardText>
-				</Card>
-			);
-		}
-		return null;
+		return (
+			<Card className="toolTipcard">
+				<Paper>
+					<CardHeader title={this.props.label} className="header" />
+				</Paper>
+				<CardText className="text">{this.props.text}</CardText>
+			</Card>
+		);
 	}
 }

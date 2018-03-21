@@ -31,11 +31,11 @@ class BeginnerForm extends React.Component {
 							this.saveChanges(answers);
 						}}
 					>
-						<RadioButton value={0} label="Зрідка" />
+						<RadioButton value={0} label="Зрідка (5)" />
 
-						<RadioButton value={1} label="Частково" />
+						<RadioButton value={1} label="Частково (3)" />
 
-						<RadioButton value={2} label="Ні" />
+						<RadioButton value={2} label="Ні (2)" />
 					</RadioButtonGroup>
 				</div>
 
@@ -49,11 +49,11 @@ class BeginnerForm extends React.Component {
 							this.saveChanges(answers);
 						}}
 					>
-						<RadioButton value={0} label="Так" />
+						<RadioButton value={0} label="Так (2)" />
 
-						<RadioButton value={1} label="В окремих випадках" />
+						<RadioButton value={1} label="В окремих випадках (3)" />
 
-						<RadioButton value={2} label="Ні, вони не потрібні" />
+						<RadioButton value={2} label="Ні, вони не потрібні (5)" />
 					</RadioButtonGroup>
 				</div>
 
@@ -67,11 +67,11 @@ class BeginnerForm extends React.Component {
 						}}
 						valueSelected={answers && answers[2]}
 					>
-						<RadioButton value={0} label="Так" />
+						<RadioButton value={0} label="Так (2)" />
 
-						<RadioButton value={1} label="Частково" />
+						<RadioButton value={1} label="Частково (3)" />
 
-						<RadioButton value={2} label="В окремих випадках" />
+						<RadioButton value={2} label="В окремих випадках (5)" />
 					</RadioButtonGroup>
 				</div>
 			</form>

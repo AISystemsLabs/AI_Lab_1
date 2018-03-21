@@ -31,11 +31,11 @@ class ExpertForm extends React.Component {
 							this.saveChanges(answers);
 						}}
 					>
-						<RadioButton value={0} label="Так" />
+						<RadioButton value={0} label="Так (5)" />
 
-						<RadioButton value={1} label="Частково" />
+						<RadioButton value={1} label="Частково (3)" />
 
-						<RadioButton value={2} label="Вистачає досвіду" />
+						<RadioButton value={2} label="Вистачає досвіду (2)" />
 					</RadioButtonGroup>
 				</div>
 
@@ -49,11 +49,11 @@ class ExpertForm extends React.Component {
 							this.saveChanges(answers);
 						}}
 					>
-						<RadioButton value={0} label="Так" />
+						<RadioButton value={0} label="Так (5)" />
 
-						<RadioButton value={1} label="Частково" />
+						<RadioButton value={1} label="Частково (3)" />
 
-						<RadioButton value={2} label="При емоційному напруженні" />
+						<RadioButton value={2} label="При емоційному напруженні (2)" />
 					</RadioButtonGroup>
 				</div>
 
@@ -67,11 +67,11 @@ class ExpertForm extends React.Component {
 						}}
 						valueSelected={answers && answers[2]}
 					>
-						<RadioButton value={0} label="Часто" />
+						<RadioButton value={0} label="Часто (5)" />
 
-						<RadioButton value={1} label="Зрідка" />
+						<RadioButton value={1} label="Зрідка (3)" />
 
-						<RadioButton value={2} label="ТІльки власний варіант" />
+						<RadioButton value={2} label="Тільки власний варіант (2)" />
 					</RadioButtonGroup>
 				</div>
 			</form>

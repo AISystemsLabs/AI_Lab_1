@@ -31,11 +31,11 @@ class NoviceForm extends React.Component {
 							this.saveChanges(answers);
 						}}
 					>
-						<RadioButton value={0} label="Сильно" />
+						<RadioButton value={0} label="Сильно (5)" />
 
-						<RadioButton value={1} label="Не дуже" />
+						<RadioButton value={1} label="Не дуже (3)" />
 
-						<RadioButton value={2} label="Спокійний" />
+						<RadioButton value={2} label="Спокійний (2)" />
 					</RadioButtonGroup>
 				</div>
 
@@ -49,11 +49,11 @@ class NoviceForm extends React.Component {
 							this.saveChanges(answers);
 						}}
 					>
-						<RadioButton value={0} label="Поступово" />
+						<RadioButton value={0} label="Поступово (2)" />
 
-						<RadioButton value={1} label="Якомога швидше" />
+						<RadioButton value={1} label="Якомога швидше (3)" />
 
-						<RadioButton value={2} label="Дуже" />
+						<RadioButton value={2} label="Дуже (5)" />
 					</RadioButtonGroup>
 				</div>
 
@@ -67,11 +67,11 @@ class NoviceForm extends React.Component {
 						}}
 						valueSelected={answers && answers[2]}
 					>
-						<RadioButton value={0} label="Неодмінно!" />
+						<RadioButton value={0} label="Неодмінно! (5)" />
 
-						<RadioButton value={1} label="Поступово" />
+						<RadioButton value={1} label="Поступово (3)" />
 
-						<RadioButton value={2} label="Зрідка" />
+						<RadioButton value={2} label="Зрідка (2)" />
 					</RadioButtonGroup>
 				</div>
 
@@ -85,11 +85,11 @@ class NoviceForm extends React.Component {
 						}}
 						valueSelected={answers && answers[3]}
 					>
-						<RadioButton value={0} label="Так!" />
+						<RadioButton value={0} label="Так! (5)" />
 
-						<RadioButton value={1} label="Частково" />
+						<RadioButton value={1} label="Частково (3)" />
 
-						<RadioButton value={2} label="В окремих випадках" />
+						<RadioButton value={2} label="В окремих випадках (2)" />
 					</RadioButtonGroup>
 				</div>
 			</form>
